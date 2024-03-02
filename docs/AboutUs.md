@@ -9,15 +9,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Low Wei Sheng
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/profile/Wei%20Sheng.jpg" width="200px">
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
+[[github](https://github.com/LWS49)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+* Role: Tech Lead, Scheduling and tracking
 
 ### Jane Doe
 

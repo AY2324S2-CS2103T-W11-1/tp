@@ -24,6 +24,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
 import seedu.address.testutil.PersonBuilder;
 
+
 /**
  * Contains integration tests (interaction with the Model) and unit tests for RemarkCommand.
  */
@@ -35,6 +36,7 @@ public class RemarkCommandTest {
     private final Remark remark = new Remark("Some remark");
 
     @Test
+
 
     public void execute_addRemarkUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
@@ -49,6 +51,7 @@ public class RemarkCommandTest {
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
+
 
     @Test
     public void execute_deleteRemarkUnfilteredList_success() {

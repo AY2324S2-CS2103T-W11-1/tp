@@ -19,6 +19,8 @@ public class Remark {
 
     public final String value;
 
+    /**
+     * Create a remark object.
      * @param remark A valid Remark.
      */
     public Remark(String remark) {

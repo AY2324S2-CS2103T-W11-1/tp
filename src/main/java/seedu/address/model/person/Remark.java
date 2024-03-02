@@ -18,11 +18,10 @@ public class Remark {
     public static final String VALIDATION_REGEX = "[^\\r].*";
 
     public final String value;
-
     /**
      * Constructs an {@code Remark}.
      *
-     * @param remark A valid Remark.
+     * @param remark A valid Remark
      */
     public Remark(String remark) {
         requireNonNull(remark);

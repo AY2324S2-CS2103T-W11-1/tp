@@ -6,7 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_INTERNSHIPS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,12 +21,15 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.internship.ApplicationStatus;
+import seedu.address.model.internship.CompanyName;
+import seedu.address.model.internship.ContactEmail;
+import seedu.address.model.internship.ContactName;
+import seedu.address.model.internship.ContactNumber;
+import seedu.address.model.internship.Description;
+import seedu.address.model.internship.Internship;
+import seedu.address.model.internship.Location;
+import seedu.address.model.internship.Role;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -53,55 +56,58 @@ public class EditCommand extends Command {
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditInternshipDescriptor editInternshipDescriptor;
 
     /**
      * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param editInternshipDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public EditCommand(Index index, EditInternshipDescriptor editInternshipDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editInternshipDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editInternshipDescriptor = new EditInternshipDescriptor(editInternshipDescriptor);
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Internship> lastShownList = model.getFilteredInternshipList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Person personToEdit = lastShownList.get(index.getZeroBased());
-        Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Internship internshipToEdit = lastShownList.get(index.getZeroBased());
+        Internship editedInternship = createEditedInternship(internshipToEdit, editInternshipDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!internshipToEdit.isSameInternship(editedInternship) && model.hasInternship(editedInternship)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        model.setInternship(internshipToEdit, editedInternship);
+        model.updateFilteredInternshipList(PREDICATE_SHOW_ALL_INTERNSHIPS);
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedInternship)));
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private static Internship createEditedInternship(Internship internshipToEdit, EditInternshipDescriptor editPersonDescriptor) {
+        assert internshipToEdit != null;
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        CompanyName updatedCompanyName = editPersonDescriptor.getCompanyName().orElse(internshipToEdit.getCompanyName());
+        ContactName updatedContactName = editPersonDescriptor.getContactName().orElse(internshipToEdit.getContactName());
+        ContactEmail updatedContactEmail = editPersonDescriptor.getContactEmail().orElse(internshipToEdit.getContactEmail());
+        ContactNumber updatedContactNumber = editPersonDescriptor.getContactNumber().orElse(internshipToEdit.getContactNumber());
+        Location updatedLocation = editPersonDescriptor.getLocation().orElse(internshipToEdit.getLocation());
+        ApplicationStatus updatedApplicationStatus = editPersonDescriptor.getApplicationStatus().orElse(internshipToEdit.getApplicationStatus());
+        Description updatedDescription = editPersonDescriptor.getDescription().orElse(internshipToEdit.getDescription());
+        Role updatedRole = editPersonDescriptor.getRole().orElse(internshipToEdit.getRole());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Internship(updatedCompanyName, updatedContactName, updatedContactEmail, updatedContactNumber, updatedLocation, updatedApplicationStatus, updatedDescription, updatedRole);
     }
 
     @Override
@@ -117,14 +123,14 @@ public class EditCommand extends Command {
 
         EditCommand otherEditCommand = (EditCommand) other;
         return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+                && editInternshipDescriptor.equals(otherEditCommand.editInternshipDescriptor);
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .add("index", index)
-                .add("editPersonDescriptor", editPersonDescriptor)
+                .add("editPersonDescriptor", editInternshipDescriptor)
                 .toString();
     }
 
@@ -132,83 +138,89 @@ public class EditCommand extends Command {
      * Stores the details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
-    public static class EditPersonDescriptor {
-        private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Set<Tag> tags;
+    public static class EditInternshipDescriptor {
+        private CompanyName companyName;
+        private Location location;
+        private Description description;
+        private Role role;
 
-        public EditPersonDescriptor() {}
+        // Data fields
+        private ContactName contactName;
+        private ContactEmail contactEmail;
+        private ContactNumber contactNumber;
+        private ApplicationStatus applicationStatus;
+
+        public EditInternshipDescriptor() {}
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setTags(toCopy.tags);
+        public EditInternshipDescriptor(EditInternshipDescriptor toCopy) {
+            setCompanyName(toCopy.companyName);
+            setContactName(toCopy.contactName);
+            setContactEmail(toCopy.contactEmail);
+            setContactNumber(toCopy.contactNumber);
+            setLocation(toCopy.location);
+            setApplicationStatus(toCopy.applicationStatus);
+            setDescription(toCopy.description);
+            setRole(toCopy.role);
         }
-
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(companyName, contactName, contactEmail, contactNumber, location, applicationStatus, description, role);
         }
 
-        public void setName(Name name) {
-            this.name = name;
+        public void setCompanyName(CompanyName companyName) {
+            this.companyName = companyName;
         }
-
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+        public Optional<CompanyName> getCompanyName() {
+            return Optional.ofNullable(companyName);
         }
-
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setContactName(ContactName contactName) {
+            this.contactName = contactName;
         }
-
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<ContactName> getContactName() {
+            return Optional.ofNullable(contactName);
         }
-
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setContactEmail(ContactEmail contactEmail) {
+            this.contactEmail = contactEmail;
         }
-
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
+        public Optional<ContactEmail> getContactEmail() {
+            return Optional.ofNullable(contactEmail);
         }
-
-        public void setAddress(Address address) {
-            this.address = address;
+        public void setContactNumber(ContactNumber contactNumber) {
+            this.contactNumber = contactNumber;
         }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<ContactNumber> getContactNumber() {
+            return Optional.ofNullable(contactNumber);
         }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setLocation(Location location) {
+            this.location = location;
         }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Location> getLocation() {
+            return Optional.ofNullable(location);
         }
-
+        public void setApplicationStatus(ApplicationStatus applicationStatus) {
+            this.applicationStatus = applicationStatus;
+        }
+        public Optional<ApplicationStatus> getApplicationStatus() {
+            return Optional.ofNullable(applicationStatus);
+        }
+        public void setDescription(Description description) {
+            this.description = description;
+        }
+        public Optional<Description> getDescription() {
+            return Optional.ofNullable(description);
+        }
+        public void setRole(Role role) {
+            this.role = role;
+        }
+        public Optional<Role> getRole() {
+            return Optional.ofNullable(role);
+        }
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -216,26 +228,32 @@ public class EditCommand extends Command {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditInternshipDescriptor)) {
                 return false;
             }
 
-            EditPersonDescriptor otherEditPersonDescriptor = (EditPersonDescriptor) other;
-            return Objects.equals(name, otherEditPersonDescriptor.name)
-                    && Objects.equals(phone, otherEditPersonDescriptor.phone)
-                    && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+            EditInternshipDescriptor otherEditInternshipDescriptor = (EditInternshipDescriptor) other;
+            return Objects.equals(companyName, otherEditInternshipDescriptor.companyName)
+                    && Objects.equals(contactName, otherEditInternshipDescriptor.contactName)
+                    && Objects.equals(contactEmail, otherEditInternshipDescriptor.contactEmail)
+                    && Objects.equals(contactNumber, otherEditInternshipDescriptor.contactNumber)
+                    && Objects.equals(location, otherEditInternshipDescriptor.location)
+                    && Objects.equals(applicationStatus, otherEditInternshipDescriptor.applicationStatus)
+                    && Objects.equals(description, otherEditInternshipDescriptor.description)
+                    && Objects.equals(role, otherEditInternshipDescriptor.role);
         }
 
         @Override
         public String toString() {
             return new ToStringBuilder(this)
-                    .add("name", name)
-                    .add("phone", phone)
-                    .add("email", email)
-                    .add("address", address)
-                    .add("tags", tags)
+                    .add("companyName", companyName)
+                    .add("contactName", contactName)
+                    .add("contactEmail", contactEmail)
+                    .add("contactNumber", contactNumber)
+                    .add("location", location)
+                    .add("applicationStatus", applicationStatus)
+                    .add("description", description)
+                    .add("role", role)
                     .toString();
         }
     }

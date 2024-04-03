@@ -99,7 +99,7 @@ public class InternshipParserUtil {
      */
     public static Role parseOptionalRole(Optional<String> role) throws ParseException {
         if (role.isEmpty()) {
-            return new Role("Unknown");
+            return new Role("Unknown Role");
         } else {
             requireNonNull(role);
             String trimmedRole = role.get().trim();

@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Location {
     public static final String MESSAGE_CONSTRAINTS = "Locations have to be either local, overseas, or remote";
 
-    public static final String VALIDATION_REGEX = "(?i)local|remote|overseas";
+    public static final String VALIDATION_REGEX = "(?i)local|remote|overseas|unknown";
 
     /**
      * Enum of locations

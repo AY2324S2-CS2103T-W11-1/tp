@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
@@ -61,13 +62,17 @@ public class InternshipParserUtil {
      *
      * @throws ParseException if the given {@code location} is invalid.
      */
-    public static Location parseLocation(String location) throws ParseException {
-        requireNonNull(location);
-        String trimmedLocation = location.trim();
-        if (!Location.isValidLocation(trimmedLocation)) {
-            throw new ParseException(Location.MESSAGE_CONSTRAINTS);
+    public static Location parseOptionalLocation(Optional<String> location) throws ParseException {
+        if (location.isEmpty()) {
+            return new Location("UNKNOWN");
+        } else {
+            requireNonNull(location);
+            String trimmedLocation = location.get().trim();
+            if (!Location.isValidLocation(trimmedLocation)) {
+                throw new ParseException(Location.MESSAGE_CONSTRAINTS);
+            }
+            return new Location(trimmedLocation);
         }
-        return new Location(trimmedLocation);
     }
 
     /**

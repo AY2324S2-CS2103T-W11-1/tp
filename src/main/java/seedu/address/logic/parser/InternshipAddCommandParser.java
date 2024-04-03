@@ -42,7 +42,7 @@ public class InternshipAddCommandParser implements InternshipParser<InternshipAd
                         PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER, PREFIX_LOCATION, PREFIX_ROLE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_COMPANY, PREFIX_DESCRIPTION, PREFIX_STATUS, PREFIX_CONTACT_NAME,
-                PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER, PREFIX_LOCATION, PREFIX_ROLE)
+                PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER, PREFIX_ROLE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InternshipAddCommand.MESSAGE_USAGE));
         }
@@ -54,7 +54,7 @@ public class InternshipAddCommandParser implements InternshipParser<InternshipAd
         ContactName poc = InternshipParserUtil.parseContactName(argMultimap.getValue(PREFIX_CONTACT_NAME).get());
         ContactEmail email = InternshipParserUtil.parseContactEmail(argMultimap.getValue(PREFIX_CONTACT_EMAIL).get());
         ContactNumber phon = InternshipParserUtil.parseContactNumber(argMultimap.getValue(PREFIX_CONTACT_NUMBER).get());
-        Location loc = InternshipParserUtil.parseLocation(argMultimap.getValue(PREFIX_LOCATION).get());
+        Location loc = InternshipParserUtil.parseOptionalLocation(argMultimap.getValue(PREFIX_LOCATION));
         ApplicationStatus status = InternshipParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
         Description desc = InternshipParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
         Role role = InternshipParserUtil.parseRole(argMultimap.getValue(PREFIX_ROLE).get());

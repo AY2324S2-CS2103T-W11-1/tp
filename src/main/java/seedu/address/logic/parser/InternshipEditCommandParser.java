@@ -74,8 +74,8 @@ public class InternshipEditCommandParser implements InternshipParser<InternshipE
                     .getValue(PREFIX_CONTACT_EMAIL).get()));
         }
         if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
-            editInternshipDescriptor.setLocation(InternshipParserUtil.parseLocation(argMultimap
-                    .getValue(PREFIX_LOCATION).get()));
+            editInternshipDescriptor.setLocation(InternshipParserUtil.parseOptionalLocation(argMultimap
+                    .getValue(PREFIX_LOCATION)));
         }
         if (argMultimap.getValue(PREFIX_STATUS).isPresent()) {
             editInternshipDescriptor.setApplicationStatus(InternshipParserUtil.parseStatus(argMultimap

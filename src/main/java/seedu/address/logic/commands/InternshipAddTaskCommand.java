@@ -16,7 +16,7 @@ import seedu.address.model.internship.Task;
 import seedu.address.model.internship.TaskList;
 
 /**
- * Edits the details of an existing internship in the internship data.
+ * Adds a task to an internship entry.
  */
 public class InternshipAddTaskCommand extends InternshipCommand {
 

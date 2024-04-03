@@ -30,7 +30,7 @@ pageNav: 3
     - [Deleting Tasks from an Internship](#deleting-tasks-from-an-internship-deletetask)
     - [Clearing all internships](#clearing-all-internships-clear)
     - [Exiting the program](#exiting-the-program-exit)
-5. [Miscellaenous](#miscellaneous)
+5. [Miscellaneous](#miscellaneous)
     - [Saving and Editing Your Internship Data](#saving-and-editing-your-internship-data)
     - [FAQ](#faq)
     - [Known issues](#known-issues)
@@ -490,8 +490,7 @@ Adds a remark or modifies the existing one, of an existing internship at the spe
 
 **Format:** `addremark INDEX /remark REMARK`
 
-* The index refers to the index number shown in the displayed internship list. The index **must be a positive integer** 1, 2, 3, …
-* To delete an existing remark, simply input an empty string as the remark like so: <br>`addremark INDEX /remark `.
+* `INDEX` refers to the index in the internship list and **must be a positive integer** 1, 2, 3, …
  
 **Examples:**
 *  `addremark 1 /remark This internship has a behavioural interview!` <br> Adds or modifies the remark of the internship at index 1 to be `This internship has a behavioural interview!`.
@@ -506,6 +505,10 @@ Adds a remark or modifies the existing one, of an existing internship at the spe
 
 2. Successful Output after adding a remark:<br>
    ![After successfully adding a remark](./images/add-remark/addremark-after.png)
+</div>
+
+<div markdown="span" class="alert alert-info">
+ℹ️ **Tip:** To delete an existing remark, simply input an empty string as the remark like so: <br>`addremark INDEX /remark`.
 </div>
 
 [Go to Field Summary](#field-summary) | [Go to Command Summary](#command-summary) | [Go to Table of Contents](#table-of-contents)

@@ -18,9 +18,9 @@ import seedu.address.model.internship.Internship;
 /**
  * Adds a deadline to a task in an internship, or replaces the deadline if there already is one.
  */
-public class InternshipAddDeadlineCommand extends InternshipCommand {
+public class InternshipSetDeadlineCommand extends InternshipCommand {
 
-    public static final String COMMAND_WORD = "adddeadline";
+    public static final String COMMAND_WORD = "setdeadline";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Add a deadline to the task of the internship "
             + "identified by the index number used in the displayed internship data. "
@@ -41,7 +41,7 @@ public class InternshipAddDeadlineCommand extends InternshipCommand {
      * @param taskIndex index of the task in the selected internship to edit
      * @param deadline deadline of the task to be added
      */
-    public InternshipAddDeadlineCommand(Index internshipIndex, Index taskIndex, Deadline deadline) {
+    public InternshipSetDeadlineCommand(Index internshipIndex, Index taskIndex, Deadline deadline) {
         requireNonNull(internshipIndex);
         requireNonNull(taskIndex);
         requireNonNull(deadline);
@@ -60,15 +60,15 @@ public class InternshipAddDeadlineCommand extends InternshipCommand {
             throw new CommandException(InternshipMessages.MESSAGE_INVALID_INTERNSHIP_DISPLAYED_INDEX);
         }
 
-        Internship internshipToAddDeadline = lastShownList.get(internshipIndex.getZeroBased());
+        Internship internshipToSetDeadline = lastShownList.get(internshipIndex.getZeroBased());
 
-        if (taskIndex.getOneBased() > internshipToAddDeadline.getTaskList().getTaskListSize()) {
+        if (taskIndex.getOneBased() > internshipToSetDeadline.getTaskList().getTaskListSize()) {
             throw new CommandException(InternshipMessages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
         }
-        internshipToAddDeadline.getTaskList().getTask(taskIndex.getZeroBased()).addDeadline(deadline);
+        internshipToSetDeadline.getTaskList().getTask(taskIndex.getZeroBased()).setDeadline(deadline);
 
         // This is necessary to trigger the UI to update the displayed deadline
-        model.setInternship(internshipToAddDeadline, internshipToAddDeadline);
+        model.setInternship(internshipToSetDeadline, internshipToSetDeadline);
 
         model.updateFilteredInternshipList(PREDICATE_SHOW_ALL_INTERNSHIPS);
 
@@ -83,14 +83,14 @@ public class InternshipAddDeadlineCommand extends InternshipCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof InternshipAddDeadlineCommand)) {
+        if (!(other instanceof InternshipSetDeadlineCommand)) {
             return false;
         }
 
-        InternshipAddDeadlineCommand otherAddDeadlineCommand = (InternshipAddDeadlineCommand) other;
-        return internshipIndex.equals(otherAddDeadlineCommand.internshipIndex)
-                && taskIndex.equals(otherAddDeadlineCommand.taskIndex)
-                && deadline.equals(otherAddDeadlineCommand.deadline);
+        InternshipSetDeadlineCommand otherSetDeadlineCommand = (InternshipSetDeadlineCommand) other;
+        return internshipIndex.equals(otherSetDeadlineCommand.internshipIndex)
+                && taskIndex.equals(otherSetDeadlineCommand.taskIndex)
+                && deadline.equals(otherSetDeadlineCommand.deadline);
     }
 
     @Override

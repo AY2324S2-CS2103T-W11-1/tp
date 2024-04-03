@@ -8,21 +8,21 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DEADLINE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SELECT_TASK;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.InternshipAddDeadlineCommand;
+import seedu.address.logic.commands.InternshipSetDeadlineCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.internship.Deadline;
 
 /**
- * Parses input arguments and creates a new InternshipAddDeadlineCommand object
+ * Parses input arguments and creates a new InternshipSetDeadlineCommand object
  */
-public class InternshipAddDeadlineCommandParser implements InternshipParser<InternshipAddDeadlineCommand> {
+public class InternshipSetDeadlineCommandParser implements InternshipParser<InternshipSetDeadlineCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the InternshipAddDeadlineCommand
-     * and returns an InternshipAddDeadlineCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the InternshipSetDeadlineCommand
+     * and returns an InternshipSetDeadlineCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public InternshipAddDeadlineCommand parse(String args) throws ParseException {
+    public InternshipSetDeadlineCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SELECT_TASK, PREFIX_DEADLINE);
 
@@ -33,7 +33,7 @@ public class InternshipAddDeadlineCommandParser implements InternshipParser<Inte
         if (argMultimap.getPreamble().isEmpty() || argMultimap.getValue(PREFIX_SELECT_TASK).isEmpty()
                 || argMultimap.getValue(PREFIX_DEADLINE).isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    InternshipAddDeadlineCommand.MESSAGE_USAGE));
+                    InternshipSetDeadlineCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -57,6 +57,6 @@ public class InternshipAddDeadlineCommandParser implements InternshipParser<Inte
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SELECT_TASK, PREFIX_DEADLINE);
 
-        return new InternshipAddDeadlineCommand(internshipIndex, taskIndex, deadline);
+        return new InternshipSetDeadlineCommand(internshipIndex, taskIndex, deadline);
     }
 }

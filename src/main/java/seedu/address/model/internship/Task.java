@@ -94,7 +94,7 @@ public class Task {
     /**
      * Replace deadline with {@code deadline}.
      */
-    public void addDeadline(Deadline deadline) {
+    public void setDeadline(Deadline deadline) {
         this.deadline = deadline;
         isDeadlineSet = true;
     }

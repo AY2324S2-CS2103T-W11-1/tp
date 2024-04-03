@@ -15,14 +15,14 @@ import static seedu.address.testutil.InternshipTypicalIndexes.INDEX_SECOND_INTER
 import org.junit.jupiter.api.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.InternshipAddDeadlineCommand;
+import seedu.address.logic.commands.InternshipSetDeadlineCommand;
 import seedu.address.model.internship.Deadline;
 
-public class InternshipAddDeadlineCommandParserTest {
+public class InternshipSetDeadlineCommandParserTest {
     private static final Index INDEX_SECOND_TASK = Index.fromOneBased(2);
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, InternshipAddDeadlineCommand.MESSAGE_USAGE);
-    private InternshipAddDeadlineCommandParser parser = new InternshipAddDeadlineCommandParser();
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, InternshipSetDeadlineCommand.MESSAGE_USAGE);
+    private InternshipSetDeadlineCommandParser parser = new InternshipSetDeadlineCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -51,7 +51,7 @@ public class InternshipAddDeadlineCommandParserTest {
 
         // no prefix deadline
         assertParseFailure(parser, userInputWithoutPrefixDeadline, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                InternshipAddDeadlineCommand.MESSAGE_USAGE));
+                InternshipSetDeadlineCommand.MESSAGE_USAGE));
 
         // no deadline text
         assertParseFailure(parser, userInputWithoutDeadlineText, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -97,7 +97,7 @@ public class InternshipAddDeadlineCommandParserTest {
         String userInput = String.format("%d %s %d %s", internshipIndex.getOneBased(), PREFIX_SELECT_TASK,
                 taskIndex.getOneBased(), DEADLINE_DESC_AMY);
 
-        InternshipAddDeadlineCommand expectedCommand = new InternshipAddDeadlineCommand(internshipIndex, taskIndex,
+        InternshipSetDeadlineCommand expectedCommand = new InternshipSetDeadlineCommand(internshipIndex, taskIndex,
                 new Deadline(VALID_DEADLINE_AMY));
 
         assertParseSuccess(parser, userInput, expectedCommand);

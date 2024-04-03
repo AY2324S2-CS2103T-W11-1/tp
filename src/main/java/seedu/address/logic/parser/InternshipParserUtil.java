@@ -97,13 +97,17 @@ public class InternshipParserUtil {
      *
      * @throws ParseException if the given {@code role} is invalid.
      */
-    public static Role parseRole(String role) throws ParseException {
-        requireNonNull(role);
-        String trimmedRole = role.trim();
-        if (!Role.isValidRole(trimmedRole)) {
-            throw new ParseException(Role.MESSAGE_CONSTRAINTS);
+    public static Role parseOptionalRole(Optional<String> role) throws ParseException {
+        if (role.isEmpty()) {
+            return new Role("Unknown");
+        } else {
+            requireNonNull(role);
+            String trimmedRole = role.get().trim();
+            if (!Role.isValidRole(trimmedRole)) {
+                throw new ParseException(Role.MESSAGE_CONSTRAINTS);
+            }
+            return new Role(trimmedRole);
         }
-        return new Role(trimmedRole);
     }
 
     /**

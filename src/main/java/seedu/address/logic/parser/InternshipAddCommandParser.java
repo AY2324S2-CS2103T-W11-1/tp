@@ -42,7 +42,7 @@ public class InternshipAddCommandParser implements InternshipParser<InternshipAd
                         PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER, PREFIX_LOCATION, PREFIX_ROLE);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_COMPANY, PREFIX_DESCRIPTION, PREFIX_STATUS, PREFIX_CONTACT_NAME,
-                PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER, PREFIX_ROLE)
+                PREFIX_CONTACT_EMAIL, PREFIX_CONTACT_NUMBER)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, InternshipAddCommand.MESSAGE_USAGE));
         }
@@ -57,7 +57,7 @@ public class InternshipAddCommandParser implements InternshipParser<InternshipAd
         Location loc = InternshipParserUtil.parseOptionalLocation(argMultimap.getValue(PREFIX_LOCATION));
         ApplicationStatus status = InternshipParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
         Description desc = InternshipParserUtil.parseDescription(argMultimap.getValue(PREFIX_DESCRIPTION).get());
-        Role role = InternshipParserUtil.parseRole(argMultimap.getValue(PREFIX_ROLE).get());
+        Role role = InternshipParserUtil.parseOptionalRole(argMultimap.getValue(PREFIX_ROLE));
         Remark remark = new Remark(""); // Add Command does not allow adding remarks immediately
         TaskList taskList = new TaskList(); // Add Command does not allow adding tasks immediately (for now
 

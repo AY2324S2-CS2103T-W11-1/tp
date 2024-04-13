@@ -26,7 +26,7 @@ public interface InternshipDataStorage {
     Optional<ReadOnlyInternshipData> readInternshipData() throws DataLoadingException;
 
     /**
-     * @see #getInternshipDataFilePath()
+     * Attempts to read internship data from the file at {@code filePath}.
      */
     Optional<ReadOnlyInternshipData> readInternshipData(Path filePath) throws DataLoadingException;
 
@@ -38,7 +38,7 @@ public interface InternshipDataStorage {
     void saveInternshipData(ReadOnlyInternshipData internshipData) throws IOException;
 
     /**
-     * @see #saveInternshipData(ReadOnlyInternshipData)
+     * Attempts to save internship data to the file at {@code filePath}.
      */
     void saveInternshipData(ReadOnlyInternshipData internshipData, Path filePath) throws IOException;
 }

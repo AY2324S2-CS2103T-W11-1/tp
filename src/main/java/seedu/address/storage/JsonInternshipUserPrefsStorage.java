@@ -17,17 +17,23 @@ public class JsonInternshipUserPrefsStorage implements InternshipUserPrefsStorag
     public JsonInternshipUserPrefsStorage(Path filePath) {
         this.filePath = filePath;
     }
-
+    /**
+     * Returns the file path of the UserPrefs data file.
+     */
     @Override
     public Path getUserPrefsFilePath() {
         return filePath;
     }
-
+    /**
+     * Returns UserPrefs data from storage.
+     * Returns {@code Optional.empty()} if storage file is not found.
+     *
+     * @throws DataLoadingException if the loading of data from preference file failed.
+     */
     @Override
     public Optional<InternshipUserPrefs> readUserPrefs() throws DataLoadingException {
         return readUserPrefs(filePath);
     }
-
     /**
      * Similar to {@link #readUserPrefs()}
      * @param prefsFilePath location of the data. Cannot be null.
@@ -36,7 +42,11 @@ public class JsonInternshipUserPrefsStorage implements InternshipUserPrefsStorag
     public Optional<InternshipUserPrefs> readUserPrefs(Path prefsFilePath) throws DataLoadingException {
         return JsonUtil.readJsonFile(prefsFilePath, InternshipUserPrefs.class);
     }
-
+    /**
+     * Saves the given {@link ReadOnlyInternshipUserPrefs} to the storage.
+     * @param userPrefs cannot be null.
+     * @throws IOException if there was any problem writing to the file.
+     */
     @Override
     public void saveUserPrefs(ReadOnlyInternshipUserPrefs userPrefs) throws IOException {
         JsonUtil.saveJsonFile(userPrefs, filePath);

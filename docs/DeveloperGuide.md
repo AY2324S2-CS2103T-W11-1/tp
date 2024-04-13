@@ -2,8 +2,20 @@
 layout: page
 title: Developer Guide
 ---
-* Table of Contents
-  {:toc}
+### Table of Contents
+1. [Acknowledgements](#acknowledgements)
+2. [Setting up, getting started](#setting-up-getting-started)
+3. [Design](#design)
+    - [Architecture](#architecture)
+    - [UI Component](#ui-component)
+    - [InternshipLogic Component](#internshiplogic-component)
+    - [InternshipModel Component](#internshipmodel-component)
+    - [InternshipStorage Component](#internshipstorage-component)
+    - [Common classes](#common-classes)
+4. [Implementation](#implementation)
+    - [Sort](#sort-feature)
+5. [Documentation, logging, testing, configuration, dev-ops](#documentation-logging-testing-configuration-dev-ops)
+6. [Appendix: Requirements](#appendix-requirements)
 
 --------------------------------------------------------------------------------------------------------------------
 

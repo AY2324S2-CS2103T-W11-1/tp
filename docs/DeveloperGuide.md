@@ -542,7 +542,7 @@ Make sure to use the `exit` command or the close button to save data while closi
 
 1. _{ more test cases …​ }_
 
-### Sort Feature
+#### Sort Feature
 1. Prerequisites: Delete the data file (`./data/internshipdata.json`) before launching the app to populate the app with sample data.
 2. Add another internship entry using the following command: `add /com Amazon /desc create new recommendation engine /status ongoing /poc jane yeo /email hr@tiktok.com /phone 9089030 /loc remote /role Business Development Intern`
     1. Test case: `sort /status desc`<br>
@@ -553,3 +553,34 @@ Make sure to use the `exit` command or the close button to save data while closi
    3. Test case: `sort /com asc`<br>
       Expected: The list of internships is sorted in alphabetical order of the company name. The status message shows how many internships were sorted successfully. Note that this test case allows you to see how the sort is layered on top of each other. The two Amazon internships are de-conflicted based on the previous sort command. This is why the ongoing internship is listed first.
       ![Sort by com asc](./images/manual-testing/status-sort-sort-by-com.png)<br>
+   
+#### Adding a task
+
+* Adding a task to an internship.<br>
+**Prerequisites:** Be able to list internships using the `list` command. At least 1 internship present.
+
+    1. **Test case:** `addtask 1 /task Update Resume`<br>
+       **Expected:** Addition of task to the first internship entry in the list, with its details under the Tasks section.
+    
+    2. **Test case:** `addtask -1 /task Update Resume` <br>
+      **Expected:** Command fails and task is not added, with error message stating the valid index range to follow.
+
+    3. **Test case:** `addtask 1 Update Resume` <br>
+       **Expected:** Command fails and task is not added, with error message stating the correct format to follow.
+
+#### Deleting a task
+
+* Deleting a task from an internship.<br>
+**Prerequisites:** Be able to list internships using the `list` command. At least 1 internship present.
+
+    1. **Test case:** `deletetask 1 /selecttask 1`<br>
+       **Expected:** Deletion of the first task from the first internship entry in the list.
+  
+    2. **Test case:** `deletetask -1 /selecttask 1` <br>
+       **Expected:** Command fails and task is not added, with error message stating the valid index range to follow.
+  
+    3. **Test case:** `deletetask 1 /selecttask -1` <br>
+       **Expected:** Command fails and task is not added, with error message stating the valid index range to follow.
+   
+    4. **Test case:** `deletetask 1 1` <br>
+       **Expected:** Command fails and task is not added, with error message stating the correct format to follow.

@@ -14,7 +14,6 @@ title: Developer Guide
     - [Common classes](#common-classes)
 4. [Implementation](#implementation)
     - [[Proposed] Undo/redo feature](#proposed-undoredo-feature)
-    - [[Proposed] Data archiving](#proposed-data-archiving)
     - [Find](#find-feature)
     - [Sort](#sort-feature)
    -  [Optional Fields Feature](#optional-fields-feature)
@@ -174,7 +173,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-#### \[Proposed\] Undo/redo feature
+### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
 
@@ -258,13 +257,7 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: Will use less memory (e.g. for `delete`, just save the internship being deleted).
     * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-### Find feature 
+### Find feature
 The `find` feature allows users to search for internships based on the given keywords. This allows users to filter the
 view of internships in CareerSync for easier access to the internships they are interested in. The `find` command applies
 a filter predicate to the list of internships in the `InternshipModel` to display only the internships that match the given
@@ -564,211 +557,174 @@ For all use cases below (unless specified otherwise): <br>
 **Actor**: `User` <br>
 **Precondition 1**: CareerSync is in working order <br>
 **Precondition 2**: There is at least one internship entry
-<br> * Not applicable to adding internship, tasks and deadlines - you can have 0 entries at the start of these use cases.
+<br> * Not applicable to adding internship - you can have 0 entries at the start of this use case.
 
-**Use Case: Enter Internship Entry From Main Window**
+**Use Case: Add Internship Entry From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command, specifying the internship details to be added.
-3. System validates the input details.
-4. System saves the internship information.
-5. System displays the added internship details in the message box.
-6. Internship details are now visible in the main window.
+1. User inputs details of internship to be added.
+2. System displays success message with added internship details in the message box.
+3. Internship details are now visible in the main window.
 
 Use case ends.
 
 **Extensions:** <br>
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends. 
-* 3a. System recognizes that user has entered invalid internship details. <br>
-  * 3a1. System displays an error message indicating the validation error(s). <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid internship details. <br>
+  * 1a1. System displays an error message indicating the validation error(s). <br>
+  * 1a2. User enters new data. <br>
+    Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+    Use case resumes from step 2.
 
 **Use Case: Edit Internship Entry From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to enter the internship to be edited and the modifications.
-3. System validates the modified data.
-4. System saves the updated internship information.
-5. System displays all modified internship details in the message box.
-6. Internship details (with updates) are now visible in the main window.
+1. User inputs internship to be edited and modification details.
+2. System displays success message and details of edited internship in the message box.
+3. Updated internship details are visible in the main window.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered invalid values for one or more field(s). <br>
-  * 3a1. System displays an error message indicating that the internship already exists in the internship list. <br>
-    Use case resumes from Step 2.
-  * 3a2. System displays an error message indicating that the internship index is invalid. <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid arguments.<br>
+  * 1a1. System displays an error message<br>
+  * 1a2. User enters new data. <br>
+    Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+    Use case resumes from step 2.
 
 **Use Case: Delete Internship Entry From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify which internship entry is to be deleted.
-3. System validates the input data.
-4. System removes the internship entry.
-5. System displays a confirmation message indicating successful deletion and containing details of the deleted internship.
-6. Internship can no longer be seen in the main window.
+1. User inputs the internship to be deleted.
+2. System displays success message and deleted internship's details in the message box.
+3. Updated Internship list is now visible in the main window.
+4. Deleted internship is no longer visible.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered an invalid internship index. <br>
-  * 3a1. System displays an error message indicating the index error. <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered an invalid internship index. <br>
+  * 1a1. System displays an error message indicating the index error. <br>
+  * 1a2. User enters new index. <br>
+    Steps 1a1-1a2 are repeated until the index entered is correct. <br>
+    Use case resumes from step 2.
 
 **Use Case: Sort Internship Entries From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify how the visible internships should be sorted.
-3. System validates the input data.
-4. System displays the total number of internships in the message box.
-5. System displays the internship entries in the specified order, within the main window.
+1. User specifies how to sort.
+2. System displays success message and number of internships listed in the message box.
+3. Internship list is now visible in the main window, with internship entries in the sorted order.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered invalid sort conditions. <br>
-  * 3a1. System displays an error message indicating the error(s). <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid sort parameters. <br>
+  * 1a1. System displays an error message indicating the error(s).<br>
+  * 1a2. User enters new data. <br>
+    Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+    Use case resumes from step 2.
 
 **Use Case: Find Internship Entries (withAll) From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify which internship entries to find, based on the conditions stated by the user.
-3. System validates the input details.
-4. System displays the number of matching internships entries found in the message box.
-5. System displays all internship entries which matches all specified conditions, within the main window.
+1. User specifies conditions to find internships.
+2. System displays success message and number of matching internships entries found in the message box.
+3. System displays all internship entries which matches all specified conditions within the main window.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered invalid find conditions. <br>
-  * 3a1. System displays an error message indicating the condition error(s). <br>
-    Use case resumes from Step 2.
-* 5a. No matching internship entries found. <br>
-  * 5a1. System displays a message indicating no matching results found and no internships will be listed in the main window. <br>
+* 1a. System recognizes that user has entered invalid find conditions. <br>
+  * 1a1. System displays an error message indicating the condition error(s). <br>
+  * 1a2. User enters new data. <br>
+    Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+    Use case resumes from step 2.
+* 2a. No matching internship entries found. <br>
+  * 2a1. System displays a message indicating no matching results found and no internships will be listed in the main window. <br>
     Use case ends.
 
 **Use Case: Find Internship Entries (withAny) From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify which internship entries to find, based on the conditions stated by the user.
-3. System validates the input details.
-4. System displays the number of matching internships entries found in the message box.
-5. System displays all internship entries which matches any of the specified conditions, within the main window.
+1. User specifies conditions to find internships.
+2. System displays success message and the number of matching internships entries found in the message box.
+3. System displays all internship entries which matches any of the specified conditions within the main window.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered invalid find conditions. <br>
-  * 3a1. System displays an error message indicating the condition error(s). <br>
-    Use case resumes from Step 2.
-* 5a. No matching internship entries found. <br>
-  * 5a1. System displays a message indicating no matching results found and no internships will be listed in the main window. <br>
-    Use case ends.
+* 1a. System recognizes that user has entered invalid find conditions. <br>
+    * 1a1. System displays an error message indicating the condition error(s). <br>
+    * 1a2. User enters new data. <br>
+      Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+      Use case resumes from step 2.
+* 2a. No matching internship entries found. <br>
+    * 2a1. System displays a message indicating no matching results found and no internships will be listed in the main window. <br>
+      Use case ends.
 
 **Use Case: Add Internship Task From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify which internship entry to add a task to and the task details.
-3. System validates that the internship entry index and task index is valid.
-4. System displays the details of the task added, in the message box.
-5. System displays full list of internships.
+1. User inputs task and the internship to add task to.
+2. System displays success message and the added task in the message box.
+3. System displays full list of internships.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered an invalid internship index and task details. <br>
-  * 3a1. System displays an error message indicating the task detail error(s). <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid task details. <br>
+    * 1a1. System displays an error message indicating the validation error(s). <br>
+    * 1a2. User enters new data. <br>
+      Steps 1a1-1a2 are repeated until the data entered are correct. <br>
+      Use case resumes from step 2.
 
 **Use Case: Delete Internship Task From Main Window**
 
 **MSS:**
-1. User accesses the main window. 
-2. User inputs the command to specifying the internship entry and task to delete from it.
-3. System validates that the internship entry index and task index is valid.
-4. System displays the details of the task deleted, in the message box.
-5. System displays full list of internships.
+1. User inputs the task to be deleted.
+2. System displays success message and the deleted task in the message box.
+3. System displays full list of internships.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered an invalid internship and/or task index. <br>
-  * 3a1. System displays an error message indicating the index error. <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid task index. <br>
+    * 1a1. System displays an error message indicating the index error. <br>
+    * 1a2. User enters new index. <br>
+      Steps 1a1-1a2 are repeated until the index entered is correct. <br>
+      Use case resumes from step 2.
 
 **Use Case: Set Deadline For Internship Task From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User inputs the command to specify which internship task to set a deadline for. 
-3. System validates that the deadline set is valid.
-4. System displays the deadline added in the message box.
-5. System displays full list of internships.
+1. User inputs the task and the deadline.
+2. System displays success message and the added deadline in the message box.
+3. System displays full list of internships.
 
 Use case ends.
 
 **Extensions:**
 
-* 1a. User is unable to access the main window. <br>
-  * 1a1. System displays an error message. <br>
-    Use case ends.
-* 3a. System recognizes that user has entered an invalid deadline. <br>
-  * 3a1. System displays an error message indicating the invalid deadline error. <br>
-    Use case resumes from Step 2.
+* 1a. System recognizes that user has entered invalid deadline. <br>
+    * 1a1. System displays an error message indicating the validation error. <br>
+    * 1a2. User enters new deadline. <br>
+      Steps 1a1-1a2 are repeated until the data entered is correct. <br>
+      Use case resumes from step 2.
 
 **Use Case: Open Detailed Internship View From Main Window**
 
 **MSS:**
-1. User accesses the main window.
-2. User selects the internship entry for which the detailed view will be opened.
-3. System displays a detailed view of the selected internship entry.
+1. User selects the internship entry for which the detailed view will be opened.
+2. System displays a detailed view of the selected internship entry.
 
 Use case ends.
-
-**Extensions:**
-
-* 1a. User is unable to access the main window. <br>
-  Use case ends.
 
 #### Non-Functional Requirements
 
@@ -968,13 +924,13 @@ Then, list all internships using the `list` command.
    <br><br>
 2. Add another internship entry using the following command: `add /com Amazon /desc create new recommendation engine /status ongoing /poc jane yeo /email hr@tiktok.com /phone 9089030 /loc remote /role Business Development Intern`
 
-    1. Test case: `sort /status desc`<br>
-       Expected: The list of internships is sorted in the order: `Rejected -> Accepted -> Pending -> Ongoing -> To Apply`. The status message shows how many internships were sorted successfully.
-    2. Test case: `sort /status asc` <br>
-       Expected: The list of internships is sorted in the order: `To Apply -> Ongoing -> Pending -> Accepted -> Rejected`. The status message shows how many internships were sorted successfully.
+    1. **Test case**: `sort /status desc`<br>
+       **Expected**: The list of internships is sorted in the order: `Rejected -> Accepted -> Pending -> Ongoing -> To Apply`. The status message shows how many internships were sorted successfully.
+    2. **Test case**: `sort /status asc` <br>
+       **Expected**: The list of internships is sorted in the order: `To Apply -> Ongoing -> Pending -> Accepted -> Rejected`. The status message shows how many internships were sorted successfully.
        ![Sort by status asc](./images/manual-testing/sort-by-status.png)<br>
-    3. Test case: `sort /com asc`<br>
-       Expected: The list of internships is sorted in alphabetical order of the company name. The status message shows how many internships were sorted successfully. Note that this test case allows you to see how the sort is layered on top of each other. The two Amazon internships are de-conflicted based on the previous sort command. This is why the ongoing internship is listed first.
+    3. **Test case**: `sort /com asc`<br>
+       **Expected**: The list of internships is sorted in alphabetical order of the company name. The status message shows how many internships were sorted successfully. Note that this test case allows you to see how the sort is layered on top of each other. The two Amazon internships are de-conflicted based on the previous sort command. This is why the ongoing internship is listed first.
        ![Sort by com asc](./images/manual-testing/status-sort-sort-by-com.png)<br>
 
 #### Saving data
@@ -1003,7 +959,7 @@ We acknowledge that this design choice may have a slight learning curve for user
 #### Identity Fields in `isSameInternship` Method
 
 In the `Internship` class, the `isSameInternship` method is used to compare two `Internship` objects based on certain fields. 
-<br> These fields are `companyName`, `contactName`, `contactEmail`, `contactNumber`, `description`, `role` and `location`. 
+<br> These fields are `companyName`, `contactName`, `contactEmail`, `contactNumber`, `description` and `applicationStatus`. 
 <br> The choice of these fields was based on the following considerations:
 
 1. **CompanyName**: The name of the company offering the internship is a crucial identifier. Two internships at different companies are definitely not the same.
@@ -1011,14 +967,13 @@ In the `Internship` class, the `isSameInternship` method is used to compare two 
 3. **ContactEmail**: Similar to `contactName`, the contact email could be a significant identifier as it might imply different points of contact.
 4. **ContactNumber**: The contact number, like the contact name and email, could be a significant identifier for the same reasons.
 5. **Description**: The description of the internship could contain important details about the internship. Two internships with different descriptions are not the same.
-6. **Role**: The role of the internship could contain important details about the internship. Two internships with different roles are not the same.
-7. **Location**: The location of the internship could contain important details about the internship. Two internships with different locations are not the same.
-
+6. **ApplicationStatus**: A user may apply for the same internship multiple times, and wants to keep track of their previous internship applications. Thus, the application status is an important identifier.
 These fields are considered "compulsory" or "identity" fields, meaning they are essential to define the identity of an `Internship` object. If any of these fields differ between two `Internship` objects, then they are not considered the same internship. This design choice ensures that the `isSameInternship` method provides a meaningful comparison between two `Internship` objects.
 
 **Ignored Fields**
 1. The `remark` and `taskList` fields are not considered as they do not define the identity of the internship.
-2. The `applicationStatus` field is not considered as it enables a user to create 2 internships with the same details but different statuses, which reduces the usefulness of the `edit` command.
+2. The `role` field is not considered as one company could have multiple roles available for internships. This allows a user to create multiple internships with the same details but different roles.
+3. The `location` field is not considered as one company could have multiple locations for internships. This allows a user to create multiple internships with the same details but different locations.
 
 It is important to note that these explanations view the fields in isolation. When equality checks are performed, all available fields are considered.
 

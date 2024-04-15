@@ -83,7 +83,8 @@ public class InternshipEditCommand extends InternshipCommand {
         requireNonNull(model);
         List<Internship> lastShownList = model.getFilteredInternshipList();
         // This is the internship being displayed by the UI.
-        Internship currentSelectedInternship = model.getSelectedInternship().get(0);
+        Internship currentSelectedInternship = model.getSelectedInternship().isEmpty() ? null
+                : model.getSelectedInternship().get(0);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(InternshipMessages.MESSAGE_INVALID_INTERNSHIP_DISPLAYED_INDEX);
@@ -91,7 +92,8 @@ public class InternshipEditCommand extends InternshipCommand {
 
         Internship internshipToEdit = lastShownList.get(index.getZeroBased());
 
-        boolean isCurrentSelectedInternshipBeingEdited = currentSelectedInternship.equals(internshipToEdit);
+        // .equals() handles nulls check
+        boolean isCurrentSelectedInternshipBeingEdited = internshipToEdit.equals(currentSelectedInternship);
 
         Internship editedInternship = createEditedInternship(internshipToEdit, editInternshipDescriptor);
 

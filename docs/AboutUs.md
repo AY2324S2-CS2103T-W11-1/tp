@@ -13,7 +13,6 @@ You can reach us at the email `cs2103t_w11_1@comp.nus.edu.sg`
 
 <img src="images/captainkeqing.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/CaptainKeqing)]
 [[portfolio](team/captainkeqing.md)]
 

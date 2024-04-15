@@ -110,9 +110,8 @@ public class Internship {
                 && contactName.equals(otherInternship.contactName)
                 && contactEmail.equals(otherInternship.contactEmail)
                 && contactNumber.equals(otherInternship.contactNumber)
-                && description.equals(otherInternship.description)
-                && role.equals(otherInternship.role)
-                && location.equals(otherInternship.location);
+                && applicationStatus.equals(otherInternship.applicationStatus)
+                && description.equals(otherInternship.description);
     }
 
     /**

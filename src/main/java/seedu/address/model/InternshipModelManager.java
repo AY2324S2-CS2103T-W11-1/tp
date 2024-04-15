@@ -42,7 +42,7 @@ public class InternshipModelManager implements InternshipModel {
         this.userPrefs = new InternshipUserPrefs(userPrefs);
         filteredInternships = new FilteredList<>(this.internshipData.getInternshipList());
         sortedInternships = new SortedList<>(filteredInternships);
-        selectedInternship = new FilteredList<>(this.internshipData.getInternshipList());
+        selectedInternship = new FilteredList<>(filteredInternships);
     }
 
     public InternshipModelManager() {

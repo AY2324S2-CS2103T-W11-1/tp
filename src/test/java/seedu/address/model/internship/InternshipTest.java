@@ -36,8 +36,9 @@ public class InternshipTest {
         // null -> returns false
         assertFalse(ALICE_MICROSOFT.isSameInternship(null));
 
-        // same identity fields but other attributes different (application status) -> returns true
-        Internship editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withApplicationStatus("rejected").build();
+        // same mandatory fields but all other attributes different -> returns true
+        Internship editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withLocation("local")
+                .withRole("Backend Engineer").build();
         assertTrue(ALICE_MICROSOFT.isSameInternship(editedAlice));
 
         // different company name, all other attributes same -> returns false
@@ -56,16 +57,12 @@ public class InternshipTest {
         editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withContactEmail("alicer@exampler.com").build();
         assertFalse(ALICE_MICROSOFT.isSameInternship(editedAlice));
 
+        // different application status, all other attributes same -> returns false
+        editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withApplicationStatus("rejected").build();
+        assertFalse(ALICE_MICROSOFT.isSameInternship(editedAlice));
+
         // different description, all other attributes same -> returns false
         editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withDescription("Data Analyst Intern").build();
-        assertFalse(ALICE_MICROSOFT.isSameInternship(editedAlice));
-
-        // different location, all other attributes same -> returns false
-        editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withLocation("overseas").build();
-        assertFalse(ALICE_MICROSOFT.isSameInternship(editedAlice));
-
-        // different role, all other attributes same -> returns false
-        editedAlice = new InternshipBuilder(ALICE_MICROSOFT).withRole("Data Analyst").build();
         assertFalse(ALICE_MICROSOFT.isSameInternship(editedAlice));
 
         // company name differs in case, all other attributes same -> returns false
